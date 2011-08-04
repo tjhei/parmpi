@@ -30,13 +30,19 @@ int main(int argc, char * argv[])
   unsigned int done = 0;
   
   string cmd;
+
+  if (isatty(fileno(stdin)))
+  {
+    std::cerr << "usage: mpirun -n 3 parmpi < list_of_commands.txt" << endl;
+    return 0;
+  }
   
   while (!cin.eof())
   {
     getline ( cin, cmd );
     commands.push_back(cmd);
   }
-    
+      
   if (numprocs==1)
   {
     std::cerr << "[parmpi]: need more than one proc!" << std::endl;
