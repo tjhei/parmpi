@@ -1,0 +1,21 @@
+
+* What is parmpi?
+
+This tool runs a number of jobs in parallel over MPI. It is kind of like xargs
+-P but can run on several machines at the same time.
+
+* Motivation
+
+It is very useful if you have a large number of small command line jobs that
+need to be run and you have several computers to do computations on. It
+behaves in a way like a mini scheduler that can run inside a scheduler on a
+computing cluster. A standard job scheduler like TORQUE is not able to handle
+a large quantity of jobs or jobs that are very shortlived.
+
+* Usage
+
+usage example:
+usage: mpirun -n 3 parmpi < list_of_commands.txt
+
+where list_of_commands.txt contains the jobs to execute separated with a
+newline.
