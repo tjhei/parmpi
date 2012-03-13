@@ -10,8 +10,8 @@ using namespace std;
 inline std::string to_string(int i)
 {
   std::stringstream sstm;
-sstm << i;
-return sstm.str();
+  sstm << i;
+  return sstm.str();
 }
 
 int main(int argc, char * argv[])
@@ -19,13 +19,10 @@ int main(int argc, char * argv[])
   MPI_Init(&argc, &argv); 
   
   int myid, numprocs;
-    MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
-    MPI_Comm_rank(MPI_COMM_WORLD, &myid);
+  MPI_Comm_size(MPI_COMM_WORLD, &numprocs);
+  MPI_Comm_rank(MPI_COMM_WORLD, &myid);
   
   std::vector<string> commands;
-//   for (int i=0;i<5;++i)
-//     commands.push_back(string("echo `hostname` has ")+to_string(i));
-//     commands.push_back(string("sleep ")+to_string(i%3+2));
   unsigned int idx_shipped = 0;
   unsigned int done = 0;
   
@@ -62,15 +59,10 @@ int main(int argc, char * argv[])
       MPI_Recv(buf, 1, MPI_INT, MPI_ANY_SOURCE, 123, MPI_COMM_WORLD, &status);
       
       done += buf[0];
-/*      if (buf[0])
-	std::cout << status.MPI_SOURCE << " did a job!" << endl;
-      else
-	std::cout << status.MPI_SOURCE << " asks for first job!" << endl;*/
       
       if (done)
 	std::cout << "[parmpi]: done with " << done << " / " << commands.size() << endl;
       
-//       std::cout << " sending " << idx_shipped << " to " << status.MPI_SOURCE << endl;
       MPI_Send((char*)commands[idx_shipped].c_str(), 
 	       commands[idx_shipped].size()+1, 
 	       MPI_CHAR, 
@@ -115,13 +107,11 @@ int main(int argc, char * argv[])
       if (status.MPI_TAG == 1000)
       {
 	command[4095]=0;
-/*	std::cout << myid << ":" << command << endl;*/
 	system(command);
 	n_done++;
       }
       else
       {
-/*	std::cout << "client " << myid << " exiting" << endl;*/
 	break;
       }
     }
@@ -130,5 +120,4 @@ int main(int argc, char * argv[])
   MPI_Finalize(); 
   return 0;
 }
-
 
